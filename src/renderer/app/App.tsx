@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { hot } from "react-hot-loader";
 import { Toolbar, AppBar, Typography, Fab } from "@material-ui/core";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import { Sidebar } from "./components";
+import Sidebar from "./Sidebar";
 import routes from "./routes";
 
 const toolbarHeight = 80;

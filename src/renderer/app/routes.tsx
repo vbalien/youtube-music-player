@@ -1,4 +1,4 @@
-import { QueuePage, PlaylistPage } from "./pages";
+import { QueuePage, PlaylistPage } from "../pages";
 import { Redirect, RouteProps } from "react-router-dom";
 import React from "react";
 
