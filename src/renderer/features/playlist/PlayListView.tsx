@@ -49,7 +49,7 @@ export default function PlayList(): JSX.Element {
     if (xl) return 5;
     if (lg) return 4;
     if (md) return 3;
-    if (sm) return 1;
+    if (sm) return 2;
     return 1;
   };
 

@@ -21,6 +21,8 @@
   설명작성
 - [React](https://ko.reactjs.org/tutorial/tutorial.html)
   설명작성
+- [React Hook](https://ko.reactjs.org/docs/hooks-intro.html)
+  설명작성
 - [React-Router](https://reacttraining.com/react-router/web/guides/quick-start)
   설명작성
 - [Redux](https://redux.js.org/introduction/getting-started)
@@ -62,7 +64,3 @@ Visual Studio Code를 사용하여 개발한다.
 - 필요 확장 프로그램
   - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## 권장사항
-
-[Jest](https://jestjs.io/docs/en/getting-started.html)를 이용하여 Unit Test를 작성한다.

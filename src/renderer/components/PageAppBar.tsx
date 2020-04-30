@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,7 @@ import {
   Theme,
   makeStyles,
 } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
+import { Search as SearchIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,10 +70,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface PlayListAppBarParams {
   title: string;
+  icon?: ReactNode;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function PlayListAppBar({
+export default function PageAppBar({
   title,
+  icon,
+  onChange,
 }: PlayListAppBarParams): JSX.Element {
   const classes = useStyles();
 
@@ -81,6 +85,7 @@ export default function PlayListAppBar({
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          <div className={classes.menuButton}>{icon}</div>
           <Typography className={classes.title} variant="h6" noWrap>
             {title}
           </Typography>
@@ -89,6 +94,7 @@ export default function PlayListAppBar({
               <SearchIcon />
             </div>
             <InputBase
+              onChange={onChange}
               placeholder="현재 목록에서 검색"
               classes={{
                 root: classes.inputRoot,

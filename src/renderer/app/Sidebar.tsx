@@ -44,7 +44,7 @@ interface SidebarProps {
   toolbarHeight: number;
 }
 
-function Sidebar(props: SidebarProps): JSX.Element {
+export default function Sidebar(props: SidebarProps): JSX.Element {
   const classes = useStyles(props);
   const location = useLocation();
   return (
@@ -75,7 +75,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
             <ListSubheader component="div" id="nested-list-subheader">
               PlayList
               <ListItemSecondaryAction>
-                <Tooltip title="추가">
+                <Tooltip title="플레이리스트 추가">
                   <IconButton edge="end" aria-label="add" size="small">
                     <AddIcon fontSize="small" />
                   </IconButton>
@@ -114,5 +114,3 @@ function Sidebar(props: SidebarProps): JSX.Element {
     </Drawer>
   );
 }
-
-export default Sidebar;
