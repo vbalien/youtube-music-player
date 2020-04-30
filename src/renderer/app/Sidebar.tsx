@@ -9,13 +9,18 @@ import {
   Toolbar,
   makeStyles,
   Theme,
+  ListItemSecondaryAction,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import {
   QueueMusic as QueueMusicIcon,
   PlaylistPlay as PlaylistPlayIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon,
 } from "@material-ui/icons";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles<Theme, SidebarProps>(() => ({
@@ -32,6 +37,7 @@ const useStyles = makeStyles<Theme, SidebarProps>(() => ({
   toolBar: {
     minHeight: (props): number => props.toolbarHeight,
   },
+  playlistAddBtn: {},
 }));
 
 interface SidebarProps {
@@ -40,6 +46,7 @@ interface SidebarProps {
 
 function Sidebar(props: SidebarProps): JSX.Element {
   const classes = useStyles(props);
+  const location = useLocation();
   return (
     <Drawer
       className={classes.drawer}
@@ -50,7 +57,12 @@ function Sidebar(props: SidebarProps): JSX.Element {
     >
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button component={Link} to="/queue">
+          <ListItem
+            button
+            component={RouterLink}
+            to="/queue"
+            selected={location.pathname === "/queue"}
+          >
             <ListItemIcon>
               <QueueMusicIcon />
             </ListItemIcon>
@@ -62,6 +74,13 @@ function Sidebar(props: SidebarProps): JSX.Element {
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
               PlayList
+              <ListItemSecondaryAction>
+                <Tooltip title="추가">
+                  <IconButton edge="end" aria-label="add" size="small">
+                    <AddIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </ListItemSecondaryAction>
             </ListSubheader>
           }
         >
@@ -69,11 +88,24 @@ function Sidebar(props: SidebarProps): JSX.Element {
             { name: "재생목록1", id: 0 },
             { name: "재생목록2", id: 1 },
           ].map(({ name, id }) => (
-            <ListItem button component={Link} key={id} to={`/playlist/${id}`}>
+            <ListItem
+              button
+              component={RouterLink}
+              key={id}
+              to={`/playlist/${id}`}
+              selected={location.pathname === `/playlist/${id}`}
+            >
               <ListItemIcon>
                 <PlaylistPlayIcon />
               </ListItemIcon>
               <ListItemText primary={name} />
+              <ListItemSecondaryAction>
+                <Tooltip title="삭제">
+                  <IconButton edge="end" aria-label="add" size="small">
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

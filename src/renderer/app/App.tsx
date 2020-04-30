@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
 import { hot } from "react-hot-loader";
-import { Toolbar, AppBar, Typography, Fab } from "@material-ui/core";
+import { Toolbar, AppBar, Typography } from "@material-ui/core";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import routes from "./routes";
@@ -14,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -23,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolBar: {
     minHeight: toolbarHeight,
-  },
-  fab: {
-    position: "fixed",
-    zIndex: theme.zIndex.drawer + 1,
-    bottom: 35,
-    right: 25,
   },
 }));
 
@@ -51,9 +43,6 @@ function App(): JSX.Element {
             <Typography variant="h6">현재 재생 곡 표시</Typography>
           </Toolbar>
         </AppBar>
-        <Fab aria-label="add" className={classes.fab}>
-          <AddIcon />
-        </Fab>
       </div>
     </Router>
   );
