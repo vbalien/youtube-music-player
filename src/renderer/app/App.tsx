@@ -37,6 +37,7 @@ function App(): JSX.Element {
               <Route key={i} {...route}></Route>
             ))}
           </Switch>
+          <Toolbar className={classes.toolBar} />
         </main>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar className={classes.toolBar}>

@@ -1,17 +1,8 @@
 import React from "react";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
-import MoreIcon from "@material-ui/icons/MoreVert";
+import { Tooltip, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { MoreHoriz as MoreIcon } from "@material-ui/icons";
 
-const useStyles = makeStyles(() => ({
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)",
-  },
-}));
-
-export default function PlayListMenuButton(): JSX.Element {
-  const classes = useStyles();
+export default function SidebarPlayListItemMenu(): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -26,11 +17,12 @@ export default function PlayListMenuButton(): JSX.Element {
     <React.Fragment>
       <Tooltip title="메뉴">
         <IconButton
-          aria-label={`menu`}
-          className={classes.icon}
           onClick={handleClick}
+          edge="end"
+          aria-label="add"
+          size="small"
         >
-          <MoreIcon />
+          <MoreIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -45,8 +37,8 @@ export default function PlayListMenuButton(): JSX.Element {
         }}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>큐에 추가하고 바로 재생</MenuItem>
-        <MenuItem onClick={handleClose}>큐에 추가</MenuItem>
+        <MenuItem onClick={handleClose}>목록을 큐에 추가</MenuItem>
+        <MenuItem onClick={handleClose}>내보내기</MenuItem>
         <MenuItem onClick={handleClose}>삭제</MenuItem>
       </Menu>
     </React.Fragment>

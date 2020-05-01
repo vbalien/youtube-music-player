@@ -4,23 +4,19 @@ import {
   ListItem,
   ListItemIcon,
   Divider,
-  ListSubheader,
   ListItemText,
   Toolbar,
   makeStyles,
   Theme,
-  ListItemSecondaryAction,
-  IconButton,
-  Tooltip,
 } from "@material-ui/core";
-import {
-  QueueMusic as QueueMusicIcon,
-  PlaylistPlay as PlaylistPlayIcon,
-  Add as AddIcon,
-  Delete as DeleteIcon,
-} from "@material-ui/icons";
+import { QueueMusic as QueueMusicIcon } from "@material-ui/icons";
 import React from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import SidebarPlayList from "../features/playlist/SidebarPlayList";
+
+interface SidebarProps {
+  toolbarHeight: number;
+}
 
 const drawerWidth = 240;
 const useStyles = makeStyles<Theme, SidebarProps>(() => ({
@@ -39,10 +35,6 @@ const useStyles = makeStyles<Theme, SidebarProps>(() => ({
   },
   playlistAddBtn: {},
 }));
-
-interface SidebarProps {
-  toolbarHeight: number;
-}
 
 export default function Sidebar(props: SidebarProps): JSX.Element {
   const classes = useStyles(props);
@@ -70,45 +62,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
           </ListItem>
         </List>
         <Divider />
-        <List
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              PlayList
-              <ListItemSecondaryAction>
-                <Tooltip title="플레이리스트 추가">
-                  <IconButton edge="end" aria-label="add" size="small">
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </ListItemSecondaryAction>
-            </ListSubheader>
-          }
-        >
-          {[
-            { name: "재생목록1", id: 0 },
-            { name: "재생목록2", id: 1 },
-          ].map(({ name, id }) => (
-            <ListItem
-              button
-              component={RouterLink}
-              key={id}
-              to={`/playlist/${id}`}
-              selected={location.pathname === `/playlist/${id}`}
-            >
-              <ListItemIcon>
-                <PlaylistPlayIcon />
-              </ListItemIcon>
-              <ListItemText primary={name} />
-              <ListItemSecondaryAction>
-                <Tooltip title="삭제">
-                  <IconButton edge="end" aria-label="add" size="small">
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
+        <SidebarPlayList />
       </div>
       <Toolbar className={classes.toolBar} />
     </Drawer>

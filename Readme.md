@@ -4,7 +4,7 @@
 
 제공된 소스코드를 수정하여 유튜브의 즐겨찾는 음악들을 관리하고 재생하는 웹기반 데스크톱앱을 완성한다.
 
-> `Material-UI`의 컴포넌트와 제공된 컴포넌트 외에 필요한 컴포넌트는 직접 구현할 것.
+> `Material-UI`의 컴포넌트와 코드에 있는 컴포넌트 외에 필요한 컴포넌트는 직접 구현할 것.
 > 기본코드에 제공된 컴포넌트를 사용하지 않아도 상관없음.
 
 ## 요구 기술
@@ -26,6 +26,8 @@
 - [React-Router](https://reacttraining.com/react-router/web/guides/quick-start)
   설명작성
 - [Redux](https://redux.js.org/introduction/getting-started)
+  설명작성
+- [Redux-Toolkit](https://redux-toolkit.js.org/)
   설명작성
 - [Material-UI](https://material-ui.com/)
   설명작성
