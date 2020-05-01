@@ -3,7 +3,6 @@ import {
   Toolbar,
   Typography,
   makeStyles,
-  Grid,
   IconButton,
   Slider,
   Box,
@@ -19,6 +18,7 @@ import {
   SkipNext,
   Repeat,
 } from "@material-ui/icons";
+import { seconds2Str } from "../../utils/timeUtils";
 
 export const playerHeight = 80;
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +76,7 @@ export default function Player(): JSX.Element {
             </Box>
             <Box display="flex">
               <Box display="flex" maxWidth={70} alignItems="center" px={1}>
-                <Typography align="center">00:00</Typography>
+                <Typography align="center">{seconds2Str(0)}</Typography>
               </Box>
               <Box display="flex" flexGrow={1} alignItems="center">
                 <Slider
@@ -86,7 +86,7 @@ export default function Player(): JSX.Element {
                 />
               </Box>
               <Box display="flex" maxWidth={70} alignItems="center" px={1}>
-                <Typography align="center">00:00</Typography>
+                <Typography align="center">{seconds2Str(170)}</Typography>
               </Box>
             </Box>
           </Box>

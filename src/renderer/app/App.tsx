@@ -1,11 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { hot } from "react-hot-loader";
-import { Toolbar } from "@material-ui/core";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Sidebar from "../features/sidebar/Sidebar";
 import routes from "./routes";
-import Player, { playerHeight } from "../features/player/Player";
+import Player from "../features/player/Player";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,9 +12,6 @@ const useStyles = makeStyles(() => ({
   },
   content: {
     flexGrow: 1,
-  },
-  toolBar: {
-    minHeight: playerHeight,
   },
 }));
 
@@ -32,7 +28,6 @@ function App(): JSX.Element {
               <Route key={i} {...route}></Route>
             ))}
           </Switch>
-          <Toolbar className={classes.toolBar} />
         </main>
         <Player />
       </div>
