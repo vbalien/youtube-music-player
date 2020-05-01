@@ -6,11 +6,15 @@ import { fetchVideoUrl } from "./playerSlice";
 import { useDispatch } from "react-redux";
 import { YoutubeVideo } from "../../api/youtubeApi";
 
+export interface VideoChangeEvent {
+  play: boolean;
+  loaded: boolean;
+}
 interface VideoProps {
   src?: string;
   play: boolean;
   selectedItem?: YoutubeVideo;
-  onChange(isPlaying: boolean): void;
+  onChange(event: VideoChangeEvent): void;
 }
 
 const useStyles = makeStyles<Theme>(() => ({
@@ -100,8 +104,8 @@ export default function Video(props: VideoProps): JSX.Element {
         ref={videoEl}
         className={classes.video}
         onLoadedData={onLoaded}
-        onPause={(): void => props.onChange(false)}
-        onPlay={(): void => props.onChange(true)}
+        onPause={(): void => props.onChange({ play: false, loaded })}
+        onPlay={(): void => props.onChange({ play: true, loaded })}
       >
         <source src={props.src} type="video/mp4" />
       </video>

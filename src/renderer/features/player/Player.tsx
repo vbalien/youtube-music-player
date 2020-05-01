@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, makeStyles, Box } from "@material-ui/core";
 import React from "react";
-import Video from "./Video";
+import Video, { VideoChangeEvent } from "./Video";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 import { setPlayState } from "./playerSlice";
@@ -45,8 +45,8 @@ export default function Player(): JSX.Element {
   const setMusic = (cur: number): void => {
     dispatch(setCursor(cur));
   };
-  const onChange = (isPlaying: boolean): void => {
-    setPlay(isPlaying);
+  const onChange = (event: VideoChangeEvent): void => {
+    if (event.loaded) setPlay(event.play);
   };
 
   return (
