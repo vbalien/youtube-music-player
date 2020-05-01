@@ -61,6 +61,7 @@ const useStyles = makeStyles({
 });
 
 export default function QueueTable(): JSX.Element {
+  const selectedItem = 1;
   const classes = useStyles();
 
   return (
@@ -85,7 +86,13 @@ export default function QueueTable(): JSX.Element {
         <TableBody>
           {rows.map((row) => {
             return (
-              <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+              <TableRow
+                hover
+                role="checkbox"
+                tabIndex={-1}
+                key={row.id}
+                selected={row.id === selectedItem}
+              >
                 {columns.map((column) => {
                   const value = row[column.id];
                   return (

@@ -12,14 +12,11 @@ import {
 import { QueueMusic as QueueMusicIcon } from "@material-ui/icons";
 import React from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import SidebarPlayList from "../features/playlist/SidebarPlayList";
-
-interface SidebarProps {
-  toolbarHeight: number;
-}
+import SidebarPlayList from "./SidebarPlayList";
+import { playerHeight } from "../player/Player";
 
 const drawerWidth = 240;
-const useStyles = makeStyles<Theme, SidebarProps>(() => ({
+const useStyles = makeStyles<Theme>(() => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -31,13 +28,13 @@ const useStyles = makeStyles<Theme, SidebarProps>(() => ({
     overflow: "auto",
   },
   toolBar: {
-    minHeight: (props): number => props.toolbarHeight,
+    minHeight: playerHeight,
   },
   playlistAddBtn: {},
 }));
 
-export default function Sidebar(props: SidebarProps): JSX.Element {
-  const classes = useStyles(props);
+export default function Sidebar(): JSX.Element {
+  const classes = useStyles();
   const location = useLocation();
   return (
     <Drawer

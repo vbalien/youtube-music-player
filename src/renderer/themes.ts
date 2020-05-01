@@ -6,7 +6,7 @@ const basePalette = {
     main: "#556cd6",
   },
   secondary: {
-    main: "#19857b",
+    main: "#e53935",
   },
   error: {
     main: red.A400,

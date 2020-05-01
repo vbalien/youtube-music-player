@@ -15,10 +15,11 @@ import {
   Add as AddIcon,
 } from "@material-ui/icons";
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import SidebarPlayListItemMenu from "./SidebarPlayListItemMenu";
 
 export default function SidebarPlayList(): JSX.Element {
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
