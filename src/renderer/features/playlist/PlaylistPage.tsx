@@ -5,9 +5,14 @@ import PlayListFab from "./PlayListFab";
 import PageAppBar from "../../components/PageAppBar";
 import { PlaylistPlay as PlaylistPlayIcon } from "@material-ui/icons";
 import { Toolbar } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/rootReducer";
 
 export default function PlaylistPage(): JSX.Element {
   const { id } = useParams();
+  const playlist = useSelector((state: RootState) =>
+    state.playlists.find((playlist) => playlist.id === Number(id))
+  );
 
   const onSearchInputChanged = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -20,7 +25,7 @@ export default function PlaylistPage(): JSX.Element {
       <Toolbar />
       <PageAppBar
         onChange={onSearchInputChanged}
-        title={`PlaylistId: ${id}`}
+        title={playlist?.name || ""}
         icon={
           <PlaylistPlayIcon
             color="inherit"
@@ -29,7 +34,7 @@ export default function PlaylistPage(): JSX.Element {
           />
         }
       />
-      <PlayListView />
+      <PlayListView items={playlist?.items || []} />
       <PlayListFab />
     </div>
   );

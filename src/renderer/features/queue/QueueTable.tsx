@@ -8,9 +8,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { IconButton, Tooltip } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/rootReducer";
+import { seconds2Str } from "../../utils/timeUtils";
 
 interface Column {
-  id: "title" | "author" | "lengthSeconds";
+  id: "title" | "author" | "time";
   label: string;
   width?: number;
   align?: "right";
@@ -19,35 +22,7 @@ interface Column {
 const columns: Column[] = [
   { id: "title", label: "제목" },
   { id: "author", label: "게시자", width: 200 },
-  { id: "lengthSeconds", label: "시간", width: 100 },
-];
-
-interface Data {
-  id: number;
-  title: string;
-  author: string;
-  lengthSeconds: string;
-}
-
-const rows: Data[] = [
-  {
-    id: 0,
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
-  {
-    id: 1,
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
-  {
-    id: 2,
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
+  { id: "time", label: "시간", width: 100 },
 ];
 
 const useStyles = makeStyles({
@@ -61,8 +36,15 @@ const useStyles = makeStyles({
 });
 
 export default function QueueTable(): JSX.Element {
-  const selectedItem = 1;
   const classes = useStyles();
+  const { rows, cursor } = useSelector((state: RootState) => ({
+    cursor: state.queue.cursor,
+    rows: state.queue.items.map((val, idx) => ({
+      ...val,
+      id: idx,
+      time: seconds2Str(Number(val.lengthSeconds)),
+    })),
+  }));
 
   return (
     <TableContainer className={classes.container}>
@@ -91,7 +73,7 @@ export default function QueueTable(): JSX.Element {
                 role="checkbox"
                 tabIndex={-1}
                 key={row.id}
-                selected={row.id === selectedItem}
+                selected={row.id === cursor}
               >
                 {columns.map((column) => {
                   const value = row[column.id];
@@ -102,7 +84,7 @@ export default function QueueTable(): JSX.Element {
                   );
                 })}
                 <TableCell align="left">
-                  <Tooltip title="삭제">
+                  <Tooltip title="큐에서 제거">
                     <IconButton aria-label="delete" size="small">
                       <DeleteIcon fontSize="inherit" />
                     </IconButton>

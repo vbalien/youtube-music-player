@@ -1,24 +1,11 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  makeStyles,
-  IconButton,
-  Slider,
-  Box,
-} from "@material-ui/core";
+import { AppBar, Toolbar, makeStyles, Box } from "@material-ui/core";
 import React from "react";
 import Video from "./Video";
-import {
-  PlayCircleOutlineRounded,
-  VolumeDown,
-  VolumeUp,
-  Shuffle,
-  SkipPrevious,
-  SkipNext,
-  Repeat,
-} from "@material-ui/icons";
-import { seconds2Str } from "../../utils/timeUtils";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/rootReducer";
+import { setPlayState } from "./playerSlice";
+import Controller from "./Controller";
+import { setCursor } from "../queue/queueSlice";
 
 export const playerHeight = 80;
 const useStyles = makeStyles((theme) => ({
@@ -31,81 +18,56 @@ const useStyles = makeStyles((theme) => ({
     minHeight: playerHeight,
     marginLeft: 240,
   },
+  title: {
+    position: "absolute",
+    top: 15,
+    left: 5,
+  },
 }));
 
 export default function Player(): JSX.Element {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const { current, videoUrl, isPlaying, cursor } = useSelector(
+    (state: RootState) => ({
+      current: state.queue.items[state.queue.cursor],
+      videoUrl: state.player.videoUrl,
+      isPlaying: state.player.isPlaying,
+      cursor: state.queue.cursor,
+    })
+  );
+  const setPlay = (val: boolean): void => {
+    if (!current) {
+      dispatch(setCursor(0));
+    }
+    dispatch(setPlayState(val));
+  };
+  const setMusic = (cur: number): void => {
+    dispatch(setCursor(cur));
+  };
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
-        <Video src="https://www.w3schools.com/html/mov_bbb.mp4" />
+        <Video src={videoUrl} play={isPlaying} selectedItem={current} />
         <Box
-          display="flex"
-          width="100%"
-          justifyContent="space-between"
-          alignItems="center"
+          className={classes.title}
+          maxWidth={200}
+          textOverflow="ellipsis"
+          fontSize="subtitle1.fontSize"
+          overflow="hidden"
+          whiteSpace="nowrap"
         >
-          <Box display="flex" flexDirection="column" flexGrow={1}>
-            <Box display="flex" justifyContent="center" alignItems="center">
-              <Box px={1}>
-                <IconButton size="small">
-                  <Shuffle fontSize="small" />
-                </IconButton>
-              </Box>
-              <Box px={1}>
-                <IconButton size="small">
-                  <SkipPrevious fontSize="small" />
-                </IconButton>
-              </Box>
-              <Box px={1}>
-                <IconButton size="small">
-                  <PlayCircleOutlineRounded fontSize="large" />
-                </IconButton>
-              </Box>
-              <Box px={1}>
-                <IconButton size="small">
-                  <SkipNext fontSize="small" />
-                </IconButton>
-              </Box>
-              <Box px={1}>
-                <IconButton size="small">
-                  <Repeat fontSize="small" />
-                </IconButton>
-              </Box>
-            </Box>
-            <Box display="flex">
-              <Box display="flex" maxWidth={70} alignItems="center" px={1}>
-                <Typography align="center">{seconds2Str(0)}</Typography>
-              </Box>
-              <Box display="flex" flexGrow={1} alignItems="center">
-                <Slider
-                  color="secondary"
-                  value={50}
-                  aria-labelledby="continuous-slider"
-                />
-              </Box>
-              <Box display="flex" maxWidth={70} alignItems="center" px={1}>
-                <Typography align="center">{seconds2Str(170)}</Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Box display="flex" width={140} textAlign="center">
-            <Box width={40}>
-              <VolumeDown />
-            </Box>
-            <Box flexGrow={1}>
-              <Slider
-                color="secondary"
-                value={50}
-                aria-labelledby="continuous-slider"
-              />
-            </Box>
-            <Box width={40}>
-              <VolumeUp />
-            </Box>
-          </Box>
+          {current?.title || ""}
         </Box>
+        <Controller
+          play={isPlaying}
+          setPlay={setPlay}
+          setMusic={setMusic}
+          curTime={0}
+          maxTime={Number(current?.lengthSeconds || 0)}
+          cursor={cursor}
+        />
       </Toolbar>
     </AppBar>
   );

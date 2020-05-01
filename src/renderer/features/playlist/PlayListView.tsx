@@ -5,6 +5,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import PlayListItemMenu from "./PlayListItemMenu";
 import { useMediaQuery, makeStyles } from "@material-ui/core";
+import { YoutubeVideo } from "../../api/youtubeApi";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -20,36 +21,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(3),
     margin: "0 !important",
   },
+  tile: {
+    margin: 10,
+  },
 }));
 
-const tileData = [
-  {
-    videoId: "7wNb0pHyGuI",
-    img:
-      "https://i.ytimg.com/vi/7wNb0pHyGuI/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD9LNVf9c0RFc9fb0hhbiZ1y3zgFg",
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
-  {
-    videoId: "7wNb0pHyGuI",
-    img:
-      "https://i.ytimg.com/vi/7wNb0pHyGuI/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD9LNVf9c0RFc9fb0hhbiZ1y3zgFg",
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
-  {
-    videoId: "7wNb0pHyGuI",
-    img:
-      "https://i.ytimg.com/vi/7wNb0pHyGuI/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD9LNVf9c0RFc9fb0hhbiZ1y3zgFg",
-    title: "Tobu - Roots [NCS Release]",
-    author: "NoCopyrightSounds",
-    lengthSeconds: "190",
-  },
-];
+interface PlayListViewProps {
+  items: YoutubeVideo[];
+}
 
-export default function PlayList(): JSX.Element {
+export default function PlayListView({
+  items,
+}: PlayListViewProps): JSX.Element {
   const classes = useStyles();
   const xl = useMediaQuery<Theme>((theme) => theme.breakpoints.up("xl"));
   const lg = useMediaQuery<Theme>((theme) => theme.breakpoints.up("lg"));
@@ -70,12 +53,12 @@ export default function PlayList(): JSX.Element {
         cellHeight={200}
         cols={getGridListCols()}
       >
-        {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+        {items.map((item, idx) => (
+          <GridListTile className={classes.tile} key={idx}>
+            <img src={item.thumbnail} alt={item.title} />
             <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
+              title={item.title}
+              subtitle={<span>by: {item.author}</span>}
               actionIcon={<PlayListItemMenu />}
             />
           </GridListTile>
