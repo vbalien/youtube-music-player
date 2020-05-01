@@ -23,12 +23,9 @@ export default function CreatePlaylistDialog({
       aria-describedby="alert-dialog-description"
       fullWidth
     >
-      <DialogTitle id="alert-dialog-title">{"Youtube 동영상 추가"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"플레이리스트 생성"}</DialogTitle>
       <DialogContent>
-        <TextField
-          fullWidth
-          placeholder="Video URL혹은 VideoID를 입력해주세요."
-        />
+        <TextField fullWidth placeholder="플레이리스트 이름을 입력해주세요." />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
