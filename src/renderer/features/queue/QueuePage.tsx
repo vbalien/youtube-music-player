@@ -1,9 +1,9 @@
 import React from "react";
-import PageAppBar from "../components/PageAppBar";
+import PageAppBar from "../../components/PageAppBar";
 import { QueueMusic as QueueMusicIcon } from "@material-ui/icons";
-import QueueTable from "../features/queue/QueueTable";
+import QueueTable from "./QueueTable";
 
-export default function PlaylistPage(): JSX.Element {
+export default function QueuePage(): JSX.Element {
   const onSearchInputChanged = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {

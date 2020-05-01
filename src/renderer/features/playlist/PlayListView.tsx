@@ -7,8 +7,18 @@ import PlayListItemMenu from "./PlayListItemMenu";
 import { useMediaQuery, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    position: "absolute",
+    top: 64,
+    bottom: 80,
+    paddingLeft: 240,
+    left: 0,
+    right: 0,
+    overflow: "scroll",
+  },
   gridList: {
     padding: theme.spacing(3),
+    margin: "0 !important",
   },
 }));
 
@@ -54,7 +64,7 @@ export default function PlayList(): JSX.Element {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <GridList
         className={classes.gridList}
         cellHeight={200}

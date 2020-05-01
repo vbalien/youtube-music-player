@@ -6,6 +6,7 @@ import {
   Grid,
   IconButton,
   Slider,
+  Box,
 } from "@material-ui/core";
 import React from "react";
 import Video from "./Video";
@@ -30,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: playerHeight,
     marginLeft: 240,
   },
-  menu: {
-    textAlign: "right",
-  },
 }));
 
 export default function Player(): JSX.Element {
@@ -42,74 +40,72 @@ export default function Player(): JSX.Element {
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Video src="https://www.w3schools.com/html/mov_bbb.mp4" />
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
+        <Box
+          display="flex"
+          width="100%"
+          justifyContent="space-between"
           alignItems="center"
         >
-          <Grid container item xs={10} direction="row">
-            <Grid container item xs={12} justify="center" alignItems="center">
-              <Grid item>
+          <Box display="flex" flexDirection="column" flexGrow={1}>
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Box px={1}>
                 <IconButton size="small">
                   <Shuffle fontSize="small" />
                 </IconButton>
-              </Grid>
-              <Grid item>
+              </Box>
+              <Box px={1}>
                 <IconButton size="small">
                   <SkipPrevious fontSize="small" />
                 </IconButton>
-              </Grid>
-              <Grid item>
+              </Box>
+              <Box px={1}>
                 <IconButton size="small">
                   <PlayCircleOutlineRounded fontSize="large" />
                 </IconButton>
-              </Grid>
-              <Grid item>
+              </Box>
+              <Box px={1}>
                 <IconButton size="small">
                   <SkipNext fontSize="small" />
                 </IconButton>
-              </Grid>
-              <Grid item>
+              </Box>
+              <Box px={1}>
                 <IconButton size="small">
                   <Repeat fontSize="small" />
                 </IconButton>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-              <Grid item xs={1}>
+              </Box>
+            </Box>
+            <Box display="flex">
+              <Box display="flex" maxWidth={70} alignItems="center" px={1}>
                 <Typography align="center">00:00</Typography>
-              </Grid>
-              <Grid item xs={10}>
+              </Box>
+              <Box display="flex" flexGrow={1} alignItems="center">
                 <Slider
                   color="secondary"
                   value={50}
                   aria-labelledby="continuous-slider"
                 />
-              </Grid>
-              <Grid item xs={1}>
+              </Box>
+              <Box display="flex" maxWidth={70} alignItems="center" px={1}>
                 <Typography align="center">00:00</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid className={classes.menu} item xs={2}>
-            <Grid container spacing={2}>
-              <Grid item>
-                <VolumeDown />
-              </Grid>
-              <Grid item xs>
-                <Slider
-                  color="secondary"
-                  value={50}
-                  aria-labelledby="continuous-slider"
-                />
-              </Grid>
-              <Grid item>
-                <VolumeUp />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+              </Box>
+            </Box>
+          </Box>
+          <Box display="flex" width={140} textAlign="center">
+            <Box width={40}>
+              <VolumeDown />
+            </Box>
+            <Box flexGrow={1}>
+              <Slider
+                color="secondary"
+                value={50}
+                aria-labelledby="continuous-slider"
+              />
+            </Box>
+            <Box width={40}>
+              <VolumeUp />
+            </Box>
+          </Box>
+        </Box>
       </Toolbar>
     </AppBar>
   );

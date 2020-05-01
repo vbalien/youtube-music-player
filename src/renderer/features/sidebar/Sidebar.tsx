@@ -8,8 +8,14 @@ import {
   Toolbar,
   makeStyles,
   Theme,
+  ListItemSecondaryAction,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
-import { QueueMusic as QueueMusicIcon } from "@material-ui/icons";
+import {
+  QueueMusic as QueueMusicIcon,
+  RemoveCircleOutline,
+} from "@material-ui/icons";
 import React from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import SidebarPlayList from "./SidebarPlayList";
@@ -56,6 +62,13 @@ export default function Sidebar(): JSX.Element {
               <QueueMusicIcon />
             </ListItemIcon>
             <ListItemText primary="Queue" />
+            <ListItemSecondaryAction>
+              <Tooltip title="큐 비우기">
+                <IconButton size="small">
+                  <RemoveCircleOutline fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </ListItemSecondaryAction>
           </ListItem>
         </List>
         <Divider />

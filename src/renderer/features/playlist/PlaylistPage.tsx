@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import PlayListView from "../features/playlist/PlayListView";
-import PlayListFab from "../features/playlist/PlayListFab";
-import PageAppBar from "../components/PageAppBar";
+import PlayListView from "./PlayListView";
+import PlayListFab from "./PlayListFab";
+import PageAppBar from "../../components/PageAppBar";
 import { PlaylistPlay as PlaylistPlayIcon } from "@material-ui/icons";
 import { Toolbar } from "@material-ui/core";
 
