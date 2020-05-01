@@ -10,6 +10,7 @@ interface VideoProps {
   src?: string;
   play: boolean;
   selectedItem?: YoutubeVideo;
+  onChange(isPlaying: boolean): void;
 }
 
 const useStyles = makeStyles<Theme>(() => ({
@@ -95,7 +96,13 @@ export default function Video(props: VideoProps): JSX.Element {
           <PictureInPictureAlt fontSize="large" />
         </IconButton>
       </div>
-      <video ref={videoEl} className={classes.video} onLoadedData={onLoaded}>
+      <video
+        ref={videoEl}
+        className={classes.video}
+        onLoadedData={onLoaded}
+        onPause={(): void => props.onChange(false)}
+        onPlay={(): void => props.onChange(true)}
+      >
         <source src={props.src} type="video/mp4" />
       </video>
     </div>

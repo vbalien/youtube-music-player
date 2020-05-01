@@ -45,11 +45,19 @@ export default function Player(): JSX.Element {
   const setMusic = (cur: number): void => {
     dispatch(setCursor(cur));
   };
+  const onChange = (isPlaying: boolean): void => {
+    setPlay(isPlaying);
+  };
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
-        <Video src={videoUrl} play={isPlaying} selectedItem={current} />
+        <Video
+          src={videoUrl}
+          play={isPlaying}
+          selectedItem={current}
+          onChange={onChange}
+        />
         <Box
           className={classes.title}
           maxWidth={200}

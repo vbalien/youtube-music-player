@@ -46,13 +46,15 @@
   - 한곡/전체반복 재생: 동영상 하나 혹은 큐 목록 전체를 반복해서 재생
   - 랜덤재생: 큐에서 랜덤으로 선택 재생
   - 슬라이더
-- 볼륨조절
-  
+  - 볼륨조절
+  - 자동으로 다음 곡 재생
+
 - 큐: 현재 재생중인 동영상의 큐
 
   > **IndexedDB**에 저장하여 다음 실행시 복원한다.
 
   - 큐 비우기
+  - 큐 목록 삭제
 
 - 플레이리스트
 
@@ -62,6 +64,8 @@
   - 플레이리스트 재생: 큐에 플레이리스트를 복사
   - 내보내기: 특정 플레이리스트 혹은 전체 리스트를 json파일로 받을수 있게 한다.
   - 불러오기: 내보낸 json파일을 불러온다.
+  - 플레이리스트 삭제
+  - 플레이리스트 항목 삭제
 
 - 영상 제목 검색: Redux를 사용
 
@@ -74,8 +78,6 @@ Visual Studio Code를 사용하여 개발한다.
 - 필요 확장 프로그램
   - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-
 
 ## 프로젝트 구조
 
@@ -127,4 +129,3 @@ Visual Studio Code를 사용하여 개발한다.
 ├── webpack.rules.js # webpack loader 규칙
 └── yarn.lock # yarn lock파일
 ```
-
