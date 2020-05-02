@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: 240,
     left: 0,
     right: 0,
-    overflow: "scroll",
   },
   gridList: {
     padding: theme.spacing(3),

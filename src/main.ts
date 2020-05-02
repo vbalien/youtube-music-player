@@ -45,7 +45,7 @@ const createWindow = (): void => {
     if (response === 1) {
       e.preventDefault();
     } else if (response === 2) {
-      mainWindow.hide();
+      mainWindow.minimize();
       e.preventDefault();
     }
   });
