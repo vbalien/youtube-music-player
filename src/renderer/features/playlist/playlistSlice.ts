@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { YoutubeVideo } from "../../api/youtubeApi";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { YoutubeVideo, getVideoInfo } from "../../api/youtubeApi";
+import { AppThunk } from "../../app/store";
 
 interface Playlist {
   id: number;
@@ -65,6 +66,17 @@ const playlistSlice = createSlice({
     addPlaylist(state, action): void {
       // TODO
     },
+    getYoutubeVideoInfoSuccess(
+      state,
+      action: PayloadAction<YoutubeVideo>
+    ): void {
+      console.log("받아치기..!!!");
+      console.log(action);
+    },
+    getYoutubeVideoInfoFailed(state, action: PayloadAction<string>): void {
+      console.log("실패");
+      console.log(action);
+    },
   },
 });
 
@@ -72,6 +84,19 @@ export const {
   createPlaylist,
   distroyPlaylist,
   addPlaylist,
+  getYoutubeVideoInfoSuccess,
+  getYoutubeVideoInfoFailed,
 } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
+
+export const getYoutubeViedoInfo = (videoID: string): AppThunk => async (
+  dispatch
+) => {
+  try {
+    const infos: YoutubeVideo = await getVideoInfo(videoID);
+    dispatch(getYoutubeVideoInfoSuccess(infos));
+  } catch (err) {
+    dispatch(getYoutubeVideoInfoFailed(err.toString()));
+  }
+};
