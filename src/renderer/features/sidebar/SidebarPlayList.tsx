@@ -38,8 +38,6 @@ export default function SidebarPlayList(): JSX.Element {
   const history = useHistory();
   const routeMatch = useRouteMatch<{ idx: string }>(`/playlist/:idx`);
   useEffect(() => {
-    console.log("플레이리스트가 변경됨!");
-    console.log(routeMatch);
     const params = routeMatch?.params;
     const idx: number = params?.idx === undefined ? 0 : +params.idx;
     if (playlists.length === 0) {
