@@ -14,19 +14,22 @@ import {
   PlaylistPlay as PlaylistPlayIcon,
   Add as AddIcon,
 } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import SidebarPlayListItemMenu from "./SidebarPlayListItemMenu";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 import CreatePlaylistDialog from "./CreatePlaylistDialog";
 import { remote } from "electron";
+import { createPlaylist as actCreatePlaylist } from "../playlist/playlistSlice";
 
 export default function SidebarPlayList(): JSX.Element {
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [createPlaylistOpen, setCreatePlaylistOpen] = React.useState(false);
+  const [textVal, setTextVal] = useState<string>("");
   const playlists = useSelector((state: RootState) => state.playlists);
+  const dispatch = useDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -37,10 +40,21 @@ export default function SidebarPlayList(): JSX.Element {
   };
 
   const openCreatePlaylist = (): void => {
+    setTextVal(""); // 기존에 입력한 내용을 비워준다.
     setCreatePlaylistOpen(true);
     setAnchorEl(null);
   };
   const closeCreatePlaylist = (): void => {
+    setCreatePlaylistOpen(false);
+    setAnchorEl(null);
+  };
+  const addPlaylist = (val: string) => (): void => {
+    // alert(val);
+    dispatch(
+      actCreatePlaylist({
+        name: val,
+      })
+    );
     setCreatePlaylistOpen(false);
     setAnchorEl(null);
   };
@@ -57,7 +71,10 @@ export default function SidebarPlayList(): JSX.Element {
   return (
     <React.Fragment>
       <CreatePlaylistDialog
+        textVal={textVal}
+        setTextVal={setTextVal}
         open={createPlaylistOpen}
+        onAddAndClose={addPlaylist}
         onClose={closeCreatePlaylist}
       />
       <List

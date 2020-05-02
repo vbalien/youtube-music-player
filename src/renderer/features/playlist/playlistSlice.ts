@@ -50,13 +50,20 @@ const playlistSlice = createSlice({
   name: "playlists",
   initialState,
   reducers: {
+    createPlaylist(state, action): void {
+      const { name } = action.payload;
+      state.push({
+        id: state[state.length - 1].id + 1,
+        name: name,
+        items: [],
+      });
+    },
     addPlaylist(state, action): void {
       // TODO
     },
-    // 필요에 따라 reducer 추가
   },
 });
 
-export const { addPlaylist } = playlistSlice.actions;
+export const { createPlaylist, addPlaylist } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
