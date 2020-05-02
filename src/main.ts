@@ -1,4 +1,5 @@
-import { app, BrowserWindow, dialog } from "electron";
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import ytdl from "ytdl-core";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -6,6 +7,24 @@ if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
   app.quit();
 }
+
+ipcMain.handle("get-youtube-info", async (_, videoId) => {
+  const info = await ytdl.getBasicInfo(videoId);
+  return {
+    videoId: info.video_id,
+    title: info.title,
+    author: info.author.name,
+    lengthSeconds: info.length_seconds,
+    thumbnail: info.player_response.videoDetails.thumbnail.thumbnails.slice(
+      -1
+    )[0].url,
+  };
+});
+
+ipcMain.handle("get-youtube-mp4", async (_, videoId) => {
+  const info = await ytdl.getInfo(videoId);
+  return info.formats[0].url;
+});
 
 const createWindow = (): void => {
   // Create the browser window.
