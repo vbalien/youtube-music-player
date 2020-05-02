@@ -1,8 +1,17 @@
 import React from "react";
 import { Tooltip, IconButton, Menu, MenuItem } from "@material-ui/core";
 import { MoreHoriz as MoreIcon } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { distroyPlaylist as actDistroyPlaylist } from "../playlist/playlistSlice";
 
-export default function SidebarPlayListItemMenu(): JSX.Element {
+interface SidebarPlayListItemMenuProps {
+  idx: number;
+}
+
+export default function SidebarPlayListItemMenu({
+  idx,
+}: SidebarPlayListItemMenuProps): JSX.Element {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -10,6 +19,14 @@ export default function SidebarPlayListItemMenu(): JSX.Element {
   };
 
   const handleClose = (): void => {
+    setAnchorEl(null);
+  };
+  const handleRemove = (): void => {
+    dispatch(
+      actDistroyPlaylist({
+        idx: idx,
+      })
+    );
     setAnchorEl(null);
   };
 
@@ -39,7 +56,7 @@ export default function SidebarPlayListItemMenu(): JSX.Element {
       >
         <MenuItem onClick={handleClose}>목록을 큐에 추가</MenuItem>
         <MenuItem onClick={handleClose}>내보내기</MenuItem>
-        <MenuItem onClick={handleClose}>삭제</MenuItem>
+        <MenuItem onClick={handleRemove}>삭제</MenuItem>
       </Menu>
     </React.Fragment>
   );

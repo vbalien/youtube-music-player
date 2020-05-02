@@ -23,8 +23,14 @@ export default function CreatePlaylistDialog({
 }: CreatePlaylistDialogProps): JSX.Element {
   const [value, setValue] = [textVal, setTextVal];
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    // 동시에 유효성 검사해도 될듯
     setValue(e.target.value);
+  };
+  const onKeyTest = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+    // 엔터키 후킹용
+    if (e.key === "Enter") {
+      const test = onAddAndClose(value.trim());
+      test && test({});
+    }
   };
   return (
     <Dialog
@@ -38,6 +44,7 @@ export default function CreatePlaylistDialog({
       <DialogContent>
         <TextField
           fullWidth
+          onKeyPress={onKeyTest}
           placeholder="플레이리스트 이름을 입력해주세요."
           onChange={onChange}
           value={value}

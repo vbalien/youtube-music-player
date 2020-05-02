@@ -14,8 +14,13 @@ import {
   PlaylistPlay as PlaylistPlayIcon,
   Add as AddIcon,
 } from "@material-ui/icons";
-import React, { useState } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  Link as RouterLink,
+  useLocation,
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
 import SidebarPlayListItemMenu from "./SidebarPlayListItemMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
@@ -30,6 +35,20 @@ export default function SidebarPlayList(): JSX.Element {
   const [textVal, setTextVal] = useState<string>("");
   const playlists = useSelector((state: RootState) => state.playlists);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const routeMatch = useRouteMatch<{ idx: string }>(`/playlist/:idx`);
+  useEffect(() => {
+    console.log("플레이리스트가 변경됨!");
+    console.log(routeMatch);
+    const params = routeMatch?.params;
+    const idx: number = params?.idx === undefined ? 0 : +params.idx;
+    if (playlists.length === 0) {
+      history.replace("/queue");
+    } else if (idx >= playlists.length) {
+      const nextId = playlists.length - 1;
+      history.replace(`/playlist/${nextId}`);
+    }
+  }, [playlists.length]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -49,7 +68,11 @@ export default function SidebarPlayList(): JSX.Element {
     setAnchorEl(null);
   };
   const addPlaylist = (val: string) => (): void => {
-    // alert(val);
+    if (val === "") {
+      return;
+    }
+    // 추가된 리스트로 이동하기 위하여 하는 것
+    history.push(`/playlist/${playlists.length}`);
     dispatch(
       actCreatePlaylist({
         name: val,
@@ -124,7 +147,7 @@ export default function SidebarPlayList(): JSX.Element {
             </ListItemIcon>
             <ListItemText primary={name} />
             <ListItemSecondaryAction>
-              <SidebarPlayListItemMenu />
+              <SidebarPlayListItemMenu idx={idx} />
             </ListItemSecondaryAction>
           </ListItem>
         ))}

@@ -53,10 +53,14 @@ const playlistSlice = createSlice({
     createPlaylist(state, action): void {
       const { name } = action.payload;
       state.push({
-        id: state[state.length - 1].id + 1,
+        id: state.length > 0 ? state[state.length - 1].id + 1 : 0,
         name: name,
         items: [],
       });
+    },
+    distroyPlaylist(state, action): void {
+      const { idx } = action.payload;
+      state.splice(idx, 1);
     },
     addPlaylist(state, action): void {
       // TODO
@@ -64,6 +68,10 @@ const playlistSlice = createSlice({
   },
 });
 
-export const { createPlaylist, addPlaylist } = playlistSlice.actions;
+export const {
+  createPlaylist,
+  distroyPlaylist,
+  addPlaylist,
+} = playlistSlice.actions;
 
 export default playlistSlice.reducer;
