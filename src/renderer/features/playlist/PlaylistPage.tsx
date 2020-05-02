@@ -9,10 +9,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 
 export default function PlaylistPage(): JSX.Element {
-  const { id } = useParams();
-  const playlist = useSelector((state: RootState) =>
-    state.playlists.find((playlist) => playlist.id === Number(id))
-  );
+  const { idx } = useParams();
+  const playlist = useSelector((state: RootState) => state.playlists[idx]);
 
   const onSearchInputChanged = (
     e: React.ChangeEvent<HTMLInputElement>

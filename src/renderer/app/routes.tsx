@@ -16,7 +16,7 @@ export default [
     exact: true,
   },
   {
-    path: "/playlist/:id",
+    path: "/playlist/:idx",
     component: PlaylistPage,
     exact: true,
   },

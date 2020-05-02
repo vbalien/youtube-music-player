@@ -94,13 +94,13 @@ export default function SidebarPlayList(): JSX.Element {
           </ListSubheader>
         }
       >
-        {playlists.map(({ name, id }) => (
+        {playlists.map(({ name, id }, idx) => (
           <ListItem
             button
             component={RouterLink}
             key={id}
-            to={`/playlist/${id}`}
-            selected={location.pathname === `/playlist/${id}`}
+            to={`/playlist/${idx}`}
+            selected={location.pathname === `/playlist/${idx}`}
           >
             <ListItemIcon>
               <PlaylistPlayIcon />
