@@ -2,6 +2,8 @@
 
 ## 유튜브 음악 플레이어
 
+![image-20200503070559500](./Readme.assets/image-20200503070559500.png)
+
 제공된 소스코드를 수정하여 유튜브의 즐겨찾는 음악들을 관리하고 재생하는 웹기반 데스크톱앱을 완성한다.
 
 > `Material-UI`의 컴포넌트와 코드에 있는 컴포넌트 외에 필요한 컴포넌트는 직접 구현할 것.
@@ -36,7 +38,7 @@
 - [IndexedDB](https://developer.mozilla.org/ko/docs/Web/API/IndexedDB_API/Using_IndexedDB)
   설명작성
 
-## 기능 요구사항
+## 구현해야 할 사항
 
 - 재생 컨트롤
   유튜브 mp4파일 url을 얻어와서 재생한다.
