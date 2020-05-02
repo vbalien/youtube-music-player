@@ -1,20 +1,17 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { makeStyles, Theme, IconButton } from "@material-ui/core";
 import { playerHeight } from "./Player";
 import { PictureInPictureAlt } from "@material-ui/icons";
-import { fetchVideoUrl } from "./playerSlice";
-import { useDispatch } from "react-redux";
+import { fetchVideoUrl, setLoaded } from "./playerSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { YoutubeVideo } from "../../api/youtubeApi";
+import { RootState } from "../../app/rootReducer";
 
-export interface VideoChangeEvent {
-  play: boolean;
-  loaded: boolean;
-}
 interface VideoProps {
   src?: string;
   play: boolean;
   selectedItem?: YoutubeVideo;
-  onChange(event: VideoChangeEvent): void;
+  onChange(play: boolean): void;
 }
 
 const useStyles = makeStyles<Theme>(() => ({
@@ -68,18 +65,18 @@ export default function Video(props: VideoProps): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
   const videoEl = useRef<HTMLVideoElement>(null);
-  const [loaded, setLoaded] = useState(false);
+  const loaded = useSelector((state: RootState) => state.player.isLoaded);
   const onPIP = (): void => {
     if (videoEl.current !== document.pictureInPictureElement)
       videoEl?.current?.requestPictureInPicture();
     else document.exitPictureInPicture();
   };
   const onLoaded = (): void => {
-    setLoaded(true);
+    dispatch(setLoaded(true));
   };
   useEffect(() => {
     if (props.selectedItem) {
-      setLoaded(false);
+      dispatch(setLoaded(false));
       dispatch(fetchVideoUrl(props.selectedItem.videoId));
     }
   }, [props.selectedItem]);
@@ -104,8 +101,8 @@ export default function Video(props: VideoProps): JSX.Element {
         ref={videoEl}
         className={classes.video}
         onLoadedData={onLoaded}
-        onPause={(): void => props.onChange({ play: false, loaded })}
-        onPlay={(): void => props.onChange({ play: true, loaded })}
+        onPause={(): void => props.onChange(false)}
+        onPlay={(): void => props.onChange(true)}
       >
         <source src={props.src} type="video/mp4" />
       </video>

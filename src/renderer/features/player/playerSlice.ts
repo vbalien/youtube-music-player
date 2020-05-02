@@ -5,11 +5,13 @@ import { AppThunk } from "../../app/store";
 interface PlayerState {
   videoUrl?: string;
   isPlaying: boolean;
+  isLoaded: boolean;
 }
 
 const initialState: PlayerState = {
   videoUrl: undefined,
   isPlaying: false,
+  isLoaded: false,
 };
 
 const playerSlice = createSlice({
@@ -25,6 +27,9 @@ const playerSlice = createSlice({
     getVideoUrlFailure(_, action: PayloadAction<string>): void {
       console.log(action.payload);
     },
+    setLoaded(state, action: PayloadAction<boolean>): void {
+      state.isLoaded = action.payload;
+    },
     // 필요에 따라 reducer 추가
   },
 });
@@ -33,6 +38,7 @@ export const {
   getVideoUrlSuccess,
   getVideoUrlFailure,
   setPlayState,
+  setLoaded,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

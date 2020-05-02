@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, makeStyles, Box } from "@material-ui/core";
 import React from "react";
-import Video, { VideoChangeEvent } from "./Video";
+import Video from "./Video";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 import { setPlayState } from "./playerSlice";
@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Player(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { current, videoUrl, isPlaying, cursor } = useSelector(
+  const { current, videoUrl, isPlaying, cursor, isLoaded } = useSelector(
     (state: RootState) => ({
       current: state.queue.items[state.queue.cursor],
       videoUrl: state.player.videoUrl,
       isPlaying: state.player.isPlaying,
       cursor: state.queue.cursor,
+      isLoaded: state.player.isLoaded,
     })
   );
   const setPlay = (val: boolean): void => {
@@ -43,10 +44,10 @@ export default function Player(): JSX.Element {
     dispatch(setPlayState(val));
   };
   const setMusic = (cur: number): void => {
-    dispatch(setCursor(cur));
+    if (isLoaded) dispatch(setCursor(cur));
   };
-  const onChange = (event: VideoChangeEvent): void => {
-    if (event.loaded) setPlay(event.play);
+  const onChange = (play: boolean): void => {
+    if (isLoaded) setPlay(play);
   };
 
   return (
