@@ -1,4 +1,3 @@
-import ytdl from "ytdl-core";
 import { ipcRenderer } from "electron";
 
 export interface YoutubeVideo {
