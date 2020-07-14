@@ -36,6 +36,11 @@ const createWindow = (): void => {
     webPreferences: {
       nodeIntegration: true,
     },
+    show: false,
+  });
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
   });
 
   // and load the index.html of the app.
