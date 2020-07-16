@@ -20,7 +20,8 @@ interface ControllerProps {
   volume: number;
   setPlay(val: boolean): void;
   setMusic(cur: number): void;
-  setVolume(val: number): void;
+  onVolumeChange(val: number): void;
+  onPositionChange(val: number): void;
 }
 
 export default function Controller({
@@ -30,7 +31,8 @@ export default function Controller({
   cursor,
   curTime,
   maxTime,
-  setVolume,
+  onVolumeChange,
+  onPositionChange,
   volume,
 }: ControllerProps): JSX.Element {
   return (
@@ -79,7 +81,13 @@ export default function Controller({
           <Box display="flex" flexGrow={1} alignItems="center">
             <Slider
               color="secondary"
-              value={50}
+              value={curTime}
+              min={0}
+              max={maxTime}
+              step={0.1}
+              onChange={(_, val) =>
+                typeof val === "number" && onPositionChange(val)
+              }
               aria-labelledby="continuous-slider"
             />
           </Box>
@@ -99,7 +107,9 @@ export default function Controller({
             min={0}
             max={1}
             step={0.05}
-            onChange={(_, val) => typeof val === "number" && setVolume(val)}
+            onChange={(_, val) =>
+              typeof val === "number" && onVolumeChange(val)
+            }
             aria-labelledby="continuous-slider"
           />
         </Box>

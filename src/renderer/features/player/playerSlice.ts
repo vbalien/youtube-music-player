@@ -7,6 +7,7 @@ interface PlayerState {
   isPlaying: boolean;
   isLoaded: boolean;
   volume: number;
+  position: number;
 }
 
 const initialState: PlayerState = {
@@ -14,6 +15,7 @@ const initialState: PlayerState = {
   isPlaying: false,
   isLoaded: false,
   volume: 0.5,
+  position: 0,
 };
 
 const playerSlice = createSlice({
@@ -31,9 +33,13 @@ const playerSlice = createSlice({
     },
     setLoaded(state, action: PayloadAction<boolean>): void {
       state.isLoaded = action.payload;
+      state.position = 0;
     },
     setVolume(state, action: PayloadAction<number>): void {
       state.volume = action.payload;
+    },
+    setPosition(state, action: PayloadAction<number>): void {
+      state.position = action.payload;
     },
   },
 });
@@ -44,6 +50,7 @@ export const {
   setPlayState,
   setLoaded,
   setVolume,
+  setPosition,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

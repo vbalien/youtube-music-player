@@ -1,4 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, {
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { makeStyles, Theme, IconButton } from "@material-ui/core";
 import { playerHeight } from "./Player";
 import { PictureInPictureAlt } from "@material-ui/icons";
@@ -7,12 +12,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { YoutubeVideo } from "../../api/youtubeApi";
 import { RootState } from "../../app/rootReducer";
 
+export interface VideoRef {
+  setPos(val: number): void;
+}
+
 interface VideoProps {
   src?: string;
   play: boolean;
   volume: number;
   selectedItem?: YoutubeVideo;
+  position: number;
   onChange(play: boolean): void;
+  onPositionChange(pos: number): void;
 }
 
 const useStyles = makeStyles<Theme>(() => ({
@@ -62,7 +73,7 @@ declare global {
   }
 }
 
-export default function Video(props: VideoProps): JSX.Element {
+export default forwardRef(function Video(props: VideoProps, ref): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -75,6 +86,12 @@ export default function Video(props: VideoProps): JSX.Element {
   const onLoaded = (): void => {
     dispatch(setLoaded(true));
   };
+
+  useImperativeHandle(ref, () => ({
+    setPos(val: number) {
+      if (videoEl?.current) videoEl.current.currentTime = val;
+    },
+  }));
   useEffect(() => {
     if (props.selectedItem) {
       dispatch(setLoaded(false));
@@ -108,9 +125,12 @@ export default function Video(props: VideoProps): JSX.Element {
         onLoadedData={onLoaded}
         onPause={(): void => props.onChange(false)}
         onPlay={(): void => props.onChange(true)}
+        onTimeUpdate={() =>
+          props.onPositionChange(videoEl?.current?.currentTime || 0)
+        }
       >
         <source src={props.src} type="video/mp4" />
       </video>
     </div>
   );
-}
+});

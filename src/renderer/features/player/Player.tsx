@@ -1,9 +1,9 @@
 import { AppBar, Toolbar, makeStyles, Box } from "@material-ui/core";
-import React from "react";
-import Video from "./Video";
+import React, { useRef } from "react";
+import Video, { VideoRef } from "./Video";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
-import { setPlayState, setVolume } from "./playerSlice";
+import { setPlayState, setVolume, setPosition } from "./playerSlice";
 import Controller from "./Controller";
 import { setCursor } from "../queue/queueSlice";
 
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Player(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const videoEl = useRef<VideoRef>();
   const {
     current,
     videoUrl,
@@ -35,6 +36,7 @@ export default function Player(): JSX.Element {
     cursor,
     isLoaded,
     volume,
+    position,
   } = useSelector((state: RootState) => ({
     current: state.queue.items[state.queue.cursor],
     videoUrl: state.player.videoUrl,
@@ -42,6 +44,7 @@ export default function Player(): JSX.Element {
     cursor: state.queue.cursor,
     isLoaded: state.player.isLoaded,
     volume: state.player.volume,
+    position: state.player.position,
   }));
   const setPlay = (val: boolean): void => {
     if (!current) {
@@ -60,11 +63,14 @@ export default function Player(): JSX.Element {
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Video
+          ref={videoEl}
           src={videoUrl}
           play={isPlaying}
           selectedItem={current}
           onChange={onChange}
           volume={volume}
+          position={position}
+          onPositionChange={(pos) => dispatch(setPosition(pos))}
         />
         <Box
           className={classes.title}
@@ -80,9 +86,13 @@ export default function Player(): JSX.Element {
           play={isPlaying}
           setPlay={setPlay}
           setMusic={setMusic}
-          setVolume={(val) => dispatch(setVolume(val))}
+          onVolumeChange={(val) => dispatch(setVolume(val))}
+          onPositionChange={(val) => {
+            videoEl.current?.setPos(val);
+            dispatch(setPosition(val));
+          }}
           volume={volume}
-          curTime={0}
+          curTime={position}
           maxTime={Number(current?.lengthSeconds || 0)}
           cursor={cursor}
         />
