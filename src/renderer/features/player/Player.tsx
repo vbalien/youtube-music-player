@@ -3,7 +3,7 @@ import React from "react";
 import Video from "./Video";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/rootReducer";
-import { setPlayState } from "./playerSlice";
+import { setPlayState, setVolume } from "./playerSlice";
 import Controller from "./Controller";
 import { setCursor } from "../queue/queueSlice";
 
@@ -28,15 +28,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Player(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { current, videoUrl, isPlaying, cursor, isLoaded } = useSelector(
-    (state: RootState) => ({
-      current: state.queue.items[state.queue.cursor],
-      videoUrl: state.player.videoUrl,
-      isPlaying: state.player.isPlaying,
-      cursor: state.queue.cursor,
-      isLoaded: state.player.isLoaded,
-    })
-  );
+  const {
+    current,
+    videoUrl,
+    isPlaying,
+    cursor,
+    isLoaded,
+    volume,
+  } = useSelector((state: RootState) => ({
+    current: state.queue.items[state.queue.cursor],
+    videoUrl: state.player.videoUrl,
+    isPlaying: state.player.isPlaying,
+    cursor: state.queue.cursor,
+    isLoaded: state.player.isLoaded,
+    volume: state.player.volume,
+  }));
   const setPlay = (val: boolean): void => {
     if (!current) {
       dispatch(setCursor(0));
@@ -58,6 +64,7 @@ export default function Player(): JSX.Element {
           play={isPlaying}
           selectedItem={current}
           onChange={onChange}
+          volume={volume}
         />
         <Box
           className={classes.title}
@@ -73,6 +80,8 @@ export default function Player(): JSX.Element {
           play={isPlaying}
           setPlay={setPlay}
           setMusic={setMusic}
+          setVolume={(val) => dispatch(setVolume(val))}
+          volume={volume}
           curTime={0}
           maxTime={Number(current?.lengthSeconds || 0)}
           cursor={cursor}

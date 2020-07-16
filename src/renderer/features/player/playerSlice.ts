@@ -6,12 +6,14 @@ interface PlayerState {
   videoUrl?: string;
   isPlaying: boolean;
   isLoaded: boolean;
+  volume: number;
 }
 
 const initialState: PlayerState = {
   videoUrl: undefined,
   isPlaying: false,
   isLoaded: false,
+  volume: 0.5,
 };
 
 const playerSlice = createSlice({
@@ -30,7 +32,9 @@ const playerSlice = createSlice({
     setLoaded(state, action: PayloadAction<boolean>): void {
       state.isLoaded = action.payload;
     },
-    // 필요에 따라 reducer 추가
+    setVolume(state, action: PayloadAction<number>): void {
+      state.volume = action.payload;
+    },
   },
 });
 
@@ -39,6 +43,7 @@ export const {
   getVideoUrlFailure,
   setPlayState,
   setLoaded,
+  setVolume,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

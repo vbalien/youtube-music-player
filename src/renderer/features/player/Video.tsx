@@ -10,6 +10,7 @@ import { RootState } from "../../app/rootReducer";
 interface VideoProps {
   src?: string;
   play: boolean;
+  volume: number;
   selectedItem?: YoutubeVideo;
   onChange(play: boolean): void;
 }
@@ -84,6 +85,10 @@ export default function Video(props: VideoProps): JSX.Element {
   useEffect(() => {
     if (props.src && !loaded) videoEl?.current?.load();
   }, [props.src]);
+
+  useEffect(() => {
+    if (videoEl?.current) videoEl.current.volume = props.volume;
+  }, [props.volume]);
 
   useEffect(() => {
     if (props.play && loaded) videoEl?.current?.play();

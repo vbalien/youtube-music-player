@@ -17,8 +17,10 @@ interface ControllerProps {
   cursor: number;
   curTime: number;
   maxTime: number;
+  volume: number;
   setPlay(val: boolean): void;
   setMusic(cur: number): void;
+  setVolume(val: number): void;
 }
 
 export default function Controller({
@@ -28,6 +30,8 @@ export default function Controller({
   cursor,
   curTime,
   maxTime,
+  setVolume,
+  volume,
 }: ControllerProps): JSX.Element {
   return (
     <Box
@@ -91,7 +95,11 @@ export default function Controller({
         <Box flexGrow={1}>
           <Slider
             color="secondary"
-            value={50}
+            value={volume}
+            min={0}
+            max={1}
+            step={0.05}
+            onChange={(_, val) => typeof val === "number" && setVolume(val)}
             aria-labelledby="continuous-slider"
           />
         </Box>
