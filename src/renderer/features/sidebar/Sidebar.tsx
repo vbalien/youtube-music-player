@@ -20,6 +20,8 @@ import React from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import SidebarPlayList from "./SidebarPlayList";
 import { playerHeight } from "../player/Player";
+import { clearQueue } from "../queue/queueSlice";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 const useStyles = makeStyles<Theme>(() => ({
@@ -42,6 +44,7 @@ const useStyles = makeStyles<Theme>(() => ({
 export default function Sidebar(): JSX.Element {
   const classes = useStyles();
   const location = useLocation();
+  const dispatch = useDispatch();
   return (
     <Drawer
       className={classes.drawer}
@@ -64,7 +67,12 @@ export default function Sidebar(): JSX.Element {
             <ListItemText primary="Queue" />
             <ListItemSecondaryAction>
               <Tooltip title="큐 비우기">
-                <IconButton size="small">
+                <IconButton
+                  size="small"
+                  onClick={(): void => {
+                    dispatch(clearQueue());
+                  }}
+                >
                   <RemoveCircleOutline fontSize="small" />
                 </IconButton>
               </Tooltip>
